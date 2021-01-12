@@ -5,7 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
-const languageAvailable = ['Hindi', 'English'];
+const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Kannada'];
+
+const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji'];
+
 
 function Register(props) {
 
@@ -83,24 +86,14 @@ function Register(props) {
                             </Row>
                             
                             <Form.Control as="select" multiple value={selectedLanguages} onChange={(e)=> {handleLanguageSelect(e.target.selectedOptions)}}>
-                                <option>Hindi</option>
-                                <option>English</option>
-                                <option>Tamil</option>
-                                <option>Marathi</option>
-                                <option>Kannada</option>
+                                {languageAvailable.map(language => <option key={language}>{language}</option>)}
                             </Form.Control>
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formMediaPlatforms">
                             <Form.Label>Platform </Form.Label>
                             <Form.Control as="select" multiple value={selectedPlatform} onChange={(e)=> {handlePlatformSelect(e.target.selectedOptions)}}>
-                                <option>Zee 5</option>
-                                <option>Sony Liv</option>
-                                <option>Netflix</option>
-                                <option>Amazon Prime</option>
-                                <option>Hotstar Disney</option>
-                                <option>Voot</option>
-                                <option>Alt Balaji</option>
+                                {platformsAvailable.map(platform => <option key={platform}>{platform}</option>)}
                             </Form.Control>
                         </Form.Group>                        
                     </Form.Row>
