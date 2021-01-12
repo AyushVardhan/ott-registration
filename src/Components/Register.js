@@ -6,11 +6,30 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
 const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Kannada'];
-
 const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji'];
 
-
 function Register(props) {
+    /* Reading API response
+
+    const [data, setData] = useState("");
+
+    const apiResponse = async () => {
+        let result = await fetch(
+            `http://localhost:8080/home`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => console.log(error));
+
+        let text = await result.text();
+        setData(text);
+    }
+
+    apiResponse();
+    console.log("here : " + data);
+    */
 
     const [mediaDetails, setMediaDetails] = useState({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' }); 
     
@@ -39,6 +58,16 @@ function Register(props) {
         console.log(" Name : " + mediaDetails.Name + " Director : " + mediaDetails.Director + " ReleaseDate : " + mediaDetails.ReleaseDate + 
         " Synopsis : " + mediaDetails.Synopsis + " Language : " + selectedLanguages + " Platform : " + selectedPlatform + 
         " Cast : " + mediaDetails.Cast + " Genres : " + mediaDetails.Genres);
+
+        fetch(
+            `http://localhost:8080/registerMedia`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body : JSON.stringify({ username: 'example' }),
+        })
+        .catch(error => console.log(error));
     };
 
     const onChange = (e) => {
