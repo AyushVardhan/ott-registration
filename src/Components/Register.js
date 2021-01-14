@@ -32,8 +32,8 @@ function Register(props) {
     */
 
     const [mediaDetails, setMediaDetails] = useState({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' }); 
-    
     const [selectedLanguages, setSelectedLanguages] = useState([]);
+    const [selectedPlatform, setSelectedPlatform] = useState([]);
 
     const handleLanguageSelect = function(selectedItems) {
         const flavors = [];
@@ -42,8 +42,6 @@ function Register(props) {
         }
         setSelectedLanguages(flavors);
     }
-
-    const [selectedPlatform, setSelectedPlatform] = useState([]);
 
     const handlePlatformSelect = function(selectedItems) {
         const flavors = [];
@@ -65,7 +63,24 @@ function Register(props) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body : JSON.stringify({ username: 'example' }),
+            body : JSON.stringify({
+                 multimediaName: mediaDetails.Name,
+                 directorName: mediaDetails.Director,
+                 releaseDate: mediaDetails.ReleaseDate,
+                 synopsis: mediaDetails.Synopsis,
+                 language: selectedLanguages,
+                 platform: selectedPlatform,
+                 cast: mediaDetails.Cast,
+                 genres: mediaDetails.Genres
+                }),
+        })
+        .then(res => {
+            if (res.ok) {
+                console.log("Registration done successfully!");
+                setMediaDetails({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' });
+                setSelectedLanguages([]);
+                setSelectedPlatform([]);            
+            }
         })
         .catch(error => console.log(error));
     };
