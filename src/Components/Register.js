@@ -5,8 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 
-const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Kannada'];
-const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji'];
+const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Bengali', 'Kannada','Telgu'];
+const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji', 'MX Player', 'Theatre'];
 
 function Register(props) {
     /* Reading API response
