@@ -9,27 +9,6 @@ const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Bengali', 'K
 const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji', 'MX Player', 'Theatre'];
 
 function Register(props) {
-    /* Reading API response
-
-    const [data, setData] = useState("");
-
-    const apiResponse = async () => {
-        let result = await fetch(
-            `http://localhost:8080/home`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .catch(error => console.log(error));
-
-        let text = await result.text();
-        setData(text);
-    }
-
-    apiResponse();
-    console.log("here : " + data);
-    */
 
     const [mediaDetails, setMediaDetails] = useState({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' }); 
     const [selectedLanguages, setSelectedLanguages] = useState([]);
