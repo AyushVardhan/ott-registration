@@ -1,5 +1,6 @@
 import { Container } from "react-bootstrap";
 import MediaCard from "./MediaCard";
+import { useState } from 'react';
 
 const mediaDet = [
     {
@@ -25,33 +26,31 @@ const mediaDet = [
 ];
 
 function Home(props) {
+
+    const [data, setData] = useState("");
+    const apiResponse = async () => {
+        let result = await fetch(
+            `http://localhost:8080/getMedia?durationInDays=7`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => console.log(error));
+
+        let text = await result.text();
+        setData(text);
+    }
+    apiResponse();
+    console.log("here : " + data);
+
     return (
         <>
             <Container fluid='md' className='mt-5'>
-                {mediaDet.map((media,index) => {
-                    console.log("Calling " + index + " : " + media.mediaName);
-                    return <MediaCard key={index} mediaDetail={media}/>
-                })}
+                {mediaDet.map((media,index) => <MediaCard key={index} mediaDetail={media}/>)}
             </Container>
         </>
     );
 }
 
 export default Home;
-
-    // const [data, setData] = useState("");
-    // const apiResponse = async () => {
-    //     let result = await fetch(
-    //         `http://localhost:8080/home`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     })
-    //     .catch(error => console.log(error));
-
-    //     let text = await result.text();
-    //     setData(text);
-    // }
-    // apiResponse();
-    // console.log("here : " + data);
