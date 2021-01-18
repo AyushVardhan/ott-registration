@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
+import configData from "./config.json";
 
 const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Bengali', 'Kannada','Telgu'];
 const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji', 'MX Player', 'Theatre'];
@@ -36,8 +37,10 @@ function Register(props) {
         " Synopsis : " + mediaDetails.Synopsis + " Language : " + selectedLanguages + " Platform : " + selectedPlatform + 
         " Cast : " + mediaDetails.Cast + " Genres : " + mediaDetails.Genres);
 
+        const url = configData.SERVER_URL+`/registerMedia`;
+        console.log("Making call to : " + url);
         fetch(
-            `http://localhost:8080/registerMedia`, {
+            url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

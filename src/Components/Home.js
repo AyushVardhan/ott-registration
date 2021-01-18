@@ -1,6 +1,7 @@
 import { Container } from "react-bootstrap";
 import MediaCard from "./MediaCard";
 import { useState, useEffect } from 'react';
+import configData from "./config.json";
 
 function Home(props) {
 
@@ -8,8 +9,10 @@ function Home(props) {
 
     useEffect(() => {
         async function fetchData() {
+            const url = configData.SERVER_URL+`/getMedia?durationInDays=7`;
+            console.log("Making call to : " + url);
             await fetch(
-                `http://localhost:8080/getMedia?durationInDays=7`, {
+                url , {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
