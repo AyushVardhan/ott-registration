@@ -2,9 +2,27 @@ import { Container, Row } from "react-bootstrap";
 import MediaCard from "./MediaCard";
 import { useState, useEffect } from 'react';
 import configData from "./config.json";
+import Loader from "./Loader";
+
+const GetBody = (props) => {
+    if (props.showLoader) {
+        return (
+            <>
+                <Loader/>
+            </>
+        )
+    } else {
+        return (
+            <>
+                {props.dataRecvd ? props.mediaList.map((media,index) => <MediaCard key={index} mediaDetail={media}/>) : <Row className="justify-content-center mt-4"><h6>No data found. Please try after sometime</h6></Row>}
+            </>
+        )
+    }
+}
 
 function Home(props) {
 
+    const [showLoader, setShowLoader] = useState(true);
     const [dataRecvd, setDataRecvd] = useState(true);
     const [mediaList, setMediaList] = useState([]);
 
@@ -28,8 +46,14 @@ function Home(props) {
                     setMediaList(data);
                     setDataRecvd(true);
                 }
+
+                setShowLoader(false);
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                setDataRecvd(false);
+                setShowLoader(false);
+            });
         }
         fetchData();
       }, []);
@@ -38,7 +62,7 @@ function Home(props) {
         <>
             <Container fluid='md' className='mt-5'>
                 <Row className="justify-content-center"><h1>Week's Entertainment List</h1></Row>
-                {dataRecvd ? mediaList.map((media,index) => <MediaCard key={index} mediaDetail={media}/>) : <Row className="justify-content-center mt-4"><h6>No data found.</h6></Row>}
+                {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
             </Container>
         </>
     );
