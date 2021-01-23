@@ -5,6 +5,7 @@ import configData from "./config.json";
 import Loader from "./Loader";
 import NavBar from "./NavBar";
 import About from "./About";
+import ReactGA from "react-ga"; 
 
 const GetBody = (props) => {
     if (props.showLoader) {
@@ -29,6 +30,10 @@ function Home(props) {
     const [mediaList, setMediaList] = useState([]);
 
     useEffect(() => {
+
+        ReactGA.initialize('G-DRJP3ZQG2R');
+        ReactGA.pageview(window.location.pathname);
+
         async function fetchData() {
             const url = configData.SERVER_URL+`/getMedia?durationInDays=7`;
             console.log("Making call to : " + url);
@@ -58,7 +63,7 @@ function Home(props) {
             });
         }
         fetchData();
-      }, []);
+    }, []);
 
     return (
         <>
