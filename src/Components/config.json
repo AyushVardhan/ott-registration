@@ -1,4 +1,4 @@
 {
-    "LOCALHOST_URL": "http://localhost:8080",
-    "SERVER_URL": "https://peaceful-ocean-18252.herokuapp.com"
+    "SERVER_URL": "http://localhost:8080",
+    "SERVERL_URL": "https://peaceful-ocean-18252.herokuapp.com"
 }

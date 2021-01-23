@@ -3,6 +3,8 @@ import MediaCard from "./MediaCard";
 import { useState, useEffect } from 'react';
 import configData from "./config.json";
 import Loader from "./Loader";
+import NavBar from "./NavBar";
+import About from "./About";
 
 const GetBody = (props) => {
     if (props.showLoader) {
@@ -28,7 +30,7 @@ function Home(props) {
 
     useEffect(() => {
         async function fetchData() {
-            const url = configData.SERVER_URL+`/getMedia?durationInDays=1`;
+            const url = configData.SERVER_URL+`/getMedia?durationInDays=7`;
             console.log("Making call to : " + url);
             await fetch(
                 url , {
@@ -60,8 +62,10 @@ function Home(props) {
 
     return (
         <>
-            <Container fluid='md' className='mt-5'>
-                <Row className="justify-content-center"><h1>Week's Entertainment List</h1></Row>
+            <NavBar/>
+            <Container fluid='md' style={{marginTop: "5%"}} className='mb-5'>
+                <About/>
+                <Row className="justify-content-center"><h2>Latest Releases (past 7 days)</h2></Row>
                 {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
             </Container>
         </>
