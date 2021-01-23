@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Talkies Roll",
+  "name": "Talkies Roll - Get update about latest movie/web-series released",
   "icons": [
     {
       "src": "favicon.ico",

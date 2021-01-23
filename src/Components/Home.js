@@ -63,9 +63,9 @@ function Home(props) {
     return (
         <>
             <NavBar/>
-            <Container fluid='md' style={{marginTop: "5%"}} className='mb-5'>
+            <Container fluid='md' className='mb-5'>
                 <About/>
-                <Row className="justify-content-center"><h2>Latest Releases (past 7 days)</h2></Row>
+                <Row className="justify-content-center mr-1 ml-1"><h2>Latest Releases (past 7 days)</h2></Row>
                 {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
             </Container>
         </>
