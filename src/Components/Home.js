@@ -126,14 +126,14 @@ function Home(props) {
 
             <Container>
                 <Row>
-                    <Col>
+                    <Col md={6}>
                         <Row className="justify-content-center mr-1 ml-1"><h2>Latest Releases (past 7 days)</h2></Row>
                         <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
                             {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
                         </Container>
                     </Col>
 
-                    <Col>
+                    <Col md={6}>
                         <Row className="justify-content-center mr-1 ml-1"><h2>Upcoming Releases</h2></Row>
                         <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
                             {<GetFutureBody showFutureDataLoader={showFutureDataLoader} futureDataRecvd={futureDataRecvd} futureMediaList={futureMediaList} />}
