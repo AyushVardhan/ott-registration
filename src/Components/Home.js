@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import NavBar from "./NavBar";
 import About from "./About";
 import ReactGA from "react-ga"; 
+import Footer from './Footer';
 
 const GetBody = (props) => {
     if (props.showLoader) {
@@ -68,11 +69,18 @@ function Home(props) {
     return (
         <>
             <NavBar/>
-            <Container fluid='md' className='mb-5'>
+            <Container fluid='md'>
                 <About/>
+            </Container>
+
+            <Container>
                 <Row className="justify-content-center mr-1 ml-1"><h2>Latest Releases (past 7 days)</h2></Row>
+            </Container>
+
+            <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
                 {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
             </Container>
+            <Footer/>
         </>
     );
 }

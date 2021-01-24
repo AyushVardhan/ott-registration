@@ -1,4 +1,5 @@
 import { Navbar } from "react-bootstrap";
+import { Link } from 'react-scroll';
 
 const NavBar = () => {
     return (
@@ -11,7 +12,7 @@ const NavBar = () => {
                         <a href="/custom-search" style={{color: "white"}}>Custom Search</a>
                     </Navbar.Text>
                     <Navbar.Text className="mr-5">
-                        <a href="/" style={{color: "white"}}>Contact Us</a>
+                        <Link to="section1" spy={true} smooth={true} duration={1000} style={{color: "white", cursor: "pointer"}}>Contact Us</Link>
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>
