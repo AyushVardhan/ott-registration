@@ -1,4 +1,4 @@
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import MediaCard from "./MediaCard";
 import { useState, useEffect } from 'react';
 import configData from "./config.json";
@@ -24,19 +24,39 @@ const GetBody = (props) => {
     }
 }
 
+const GetFutureBody = (props) => {
+    if (props.showFutureDataLoader) {
+        return (
+            <>
+                <Loader/>
+            </>
+        )
+    } else {
+        return (
+            <>
+                {props.futureDataRecvd ? props.futureMediaList.map((media,index) => <MediaCard key={index} mediaDetail={media}/>) : <Row className="justify-content-center mt-4"><h6>No data found. Please try after sometime</h6></Row>}
+            </>
+        )
+    }
+}
+
 function Home(props) {
 
     const [showLoader, setShowLoader] = useState(true);
     const [dataRecvd, setDataRecvd] = useState(true);
     const [mediaList, setMediaList] = useState([]);
 
+    const [showFutureDataLoader, setShowFutureDataLoader] = useState(true);
+    const [futureDataRecvd, setFutureDataRecvd] = useState(true);
+    const [futureMediaList, setFutureMediaList] = useState([]);
+
     useEffect(() => {
 
         ReactGA.initialize('G-DRJP3ZQG2R');
         ReactGA.pageview(window.location.pathname);
 
-        async function fetchData() {
-            const url = configData.SERVER_URL+`/getMedia?durationInDays=7`;
+        async function fetchPastReleaseData() {
+            const url = configData.SERVER_URL+`/getMedia?durationInDays=7&futureFlag=false`;
             console.log("Making call to : " + url);
             await fetch(
                 url , {
@@ -63,7 +83,38 @@ function Home(props) {
                 setShowLoader(false);
             });
         }
-        fetchData();
+
+        async function fetchFutureReleaseData() {
+            const url = configData.SERVER_URL+`/getMedia?durationInDays=7&futureFlag=true`;
+            console.log("Making call to : " + url);
+            await fetch(
+                url , {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (Object.keys(data).length === 0) {
+                    setFutureDataRecvd(false);
+                    console.log("Data received from server is empty.");
+                } else {
+                    setFutureMediaList(data);
+                    setFutureDataRecvd(true);
+                }
+
+                setShowFutureDataLoader(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setFutureDataRecvd(false);
+                setShowFutureDataLoader(false);
+            });
+        }
+
+        fetchPastReleaseData();
+        fetchFutureReleaseData()
     }, []);
 
     return (
@@ -74,11 +125,21 @@ function Home(props) {
             </Container>
 
             <Container>
-                <Row className="justify-content-center mr-1 ml-1"><h2>Latest Releases (past 7 days)</h2></Row>
-            </Container>
+                <Row>
+                    <Col>
+                        <Row className="justify-content-center mr-1 ml-1"><h2>Latest Releases (past 7 days)</h2></Row>
+                        <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
+                            {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
+                        </Container>
+                    </Col>
 
-            <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
-                {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
+                    <Col>
+                        <Row className="justify-content-center mr-1 ml-1"><h2>Upcoming Releases</h2></Row>
+                        <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
+                            {<GetFutureBody showFutureDataLoader={showFutureDataLoader} futureDataRecvd={futureDataRecvd} futureMediaList={futureMediaList} />}
+                        </Container>
+                    </Col>
+                </Row>
             </Container>
             <Footer/>
         </>
