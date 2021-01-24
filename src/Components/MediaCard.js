@@ -15,7 +15,7 @@ function MediaCard(props) {
                     </Row>
                     <Row className='mb-1'>
                         <Col><b><i>Director Name</i> : </b>{props.mediaDetail.directorName}</Col>
-                        <Col><b><i>Release Date</i> : </b>{props.mediaDetail.releaseDate}</Col>
+                        <Col><b><i>Expected Release Date</i> : </b>{props.mediaDetail.releaseDate}</Col>
                     </Row>
                     <Row className='mb-1'>
                         <Col><b><i>Cast</i> : </b>{props.mediaDetail.cast}</Col>
