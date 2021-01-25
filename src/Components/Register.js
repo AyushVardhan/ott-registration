@@ -6,8 +6,6 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import configData from "./config.json";
 
-const languageAvailable = ['Hindi', 'English', 'Tamil', 'Marathi', 'Bengali', 'Kannada','Telgu'];
-const platformsAvailable = ['Zee 5', 'Sony Liv', 'Netflix', 'Amazon Prime', 'Hotstar Disney', 'Voot', 'Alt Balaji', 'MX Player', 'Theatre'];
 
 function Register(props) {
 
@@ -112,14 +110,14 @@ function Register(props) {
                             </Row>
                             
                             <Form.Control as="select" multiple value={selectedLanguages} onChange={(e)=> {handleLanguageSelect(e.target.selectedOptions)}}>
-                                {languageAvailable.map(language => <option key={language}>{language}</option>)}
+                                {configData.languageAvailable.map(language => <option key={language}>{language}</option>)}
                             </Form.Control>
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formMediaPlatforms">
                             <Form.Label>Platform </Form.Label>
                             <Form.Control as="select" multiple value={selectedPlatform} onChange={(e)=> {handlePlatformSelect(e.target.selectedOptions)}}>
-                                {platformsAvailable.map(platform => <option key={platform}>{platform}</option>)}
+                                {configData.platformsAvailable.map(platform => <option key={platform}>{platform}</option>)}
                             </Form.Control>
                         </Form.Group>                        
                     </Form.Row>

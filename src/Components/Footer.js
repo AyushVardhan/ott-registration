@@ -10,10 +10,10 @@ const Footer = () => {
                     </Row>
                     <Row style={{paddingBottom: "2px"}}>
                         <Col>
-                            Talkies-Roll <i class="fas fa-heart"></i>
+                            Talkies-Roll <i className="fas fa-heart"></i>
                         </Col>
                         <Col className="text-right mb-1">
-                            Hosted at <a href="https://www.heroku.com"> Heroku </a> <i class="fas fa-at"></i> {new Date().getFullYear()}
+                            Hosted at <a href="https://www.heroku.com"> Heroku </a> <i className="fas fa-at"></i> {new Date().getFullYear()}
                         </Col>            
                     </Row>
                 </Container>
