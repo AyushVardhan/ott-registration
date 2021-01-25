@@ -2,7 +2,26 @@ import Footer from "./Footer";
 import NavBar from "./NavBar";
 import {Container, Row, Col, Form, Button} from "react-bootstrap";
 import configData from "./config.json";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ReactGA from "react-ga"; 
+import Loader from "./Loader";
+import MediaCard from "./MediaCard";
+
+const GetBody = (props) => {
+    if (props.showLoader) {
+        return (
+            <>
+                <Loader/>
+            </>
+        )
+    } else {
+        return (
+            <>
+                {props.dataRecvd ? props.mediaList.map((media,index) => <MediaCard key={index} mediaDetail={media}/>) : <Row className="justify-content-center mt-4"><h6> No data found! </h6></Row>}
+            </>
+        )
+    }
+}
 
 const CustomSearch = () => {
 
@@ -21,6 +40,10 @@ const CustomSearch = () => {
     const [selectedGenre, setSelectedGenre] = useState("All");
     const [selectedEndDate, setSelectedEndDate] = useState(requiredEndDate);
     const [hasError, setHasError] = useState([]);
+
+    const [showLoader, setShowLoader] = useState(false);
+    const [dataRecvd, setDataRecvd] = useState(true);
+    const [mediaList, setMediaList] = useState([]);
 
     console.log("hasError : "+ hasError.includes("end-date"));
 
@@ -59,20 +82,59 @@ const CustomSearch = () => {
             return false;
         }
 
-        if (selectedEndDate === new Date().toJSON().slice(0, 10)){
+        if (selectedEndDate >= new Date().toJSON().slice(0, 10)){
             setHasError(["end-date"]);
             return false;
         }
 
         setHasError([]);
-        console.log(" Platform : " + selectedPlatform + ", Language : " + selectedLanguage + ", Genre : " + selectedGenre + 
-        ", EndDate : " + selectedEndDate);
+        console.log("Search triggered with data :: { Platform : " + selectedPlatform + ", Language : " + selectedLanguage + ", Genre : " + selectedGenre + 
+        ", EndDate : " + selectedEndDate + "}");
+
+        setShowLoader(true);
+        setMediaList([]);
+
+        async function getSearchResults() {
+            const url = configData.SERVER_URL+`/getResults?requestedPlatform=`+selectedPlatform+`&requestedLanguage=`+selectedLanguage+`&requestedGenre=`+selectedGenre+`&requestedEndDate=`+selectedEndDate;
+            console.log("Making call to : " + url);
+            await fetch(
+                url , {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (Object.keys(data).length === 0) {
+                    setDataRecvd(false);
+                    console.log("Data received from server is empty.");
+                } else {
+                    setMediaList(data);
+                    setDataRecvd(true);
+                }
+
+                setShowLoader(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setDataRecvd(false);
+                setShowLoader(false);
+            });
+        }
+
+        getSearchResults();
     };
+
+    useEffect(() => {
+        ReactGA.initialize('G-DRJP3ZQG2R');
+        ReactGA.pageview(window.location.pathname);
+    });
 
     return(
         <>
             <NavBar/>
-            <Container id="as" fluid='md' style={{height: '100vh'}}>
+            <Container id="as" fluid='md'>
                 <Row className="justify-content-center mt-1 mr-1 ml-1" style={{paddingTop: "70px"}}><h2>Custom Search</h2></Row> 
                 <Row className="justify-content-center" style={{fontSize: '12px'}}><p>Allowed search period is last two months from today.</p></Row>
                 <Row className="justify-content-center mt-5">
@@ -115,16 +177,16 @@ const CustomSearch = () => {
                         </Row>
                     </Col>
                     <Col>
-                        <Row className="justify-content-center mt-3">
+                        <Row className="justify-content-center mt-3 mb-1">
                             <Button variant="success" onClick={getResults}>Go</Button>
                         </Row>
                     </Col>        
                 </Row>
 
-                <Row className="justify-content-center mt-5">
-                    <p>
-                    Work in progress..  <i className="fa fa-cog fa-spin fa-1x"></i>
-                    </p>
+                <Row className="justify-content-center">
+                    <Container fluid='md' className="mb-3" style={{height: '100vh', overflowY: 'scroll'}}>
+                            {<GetBody showLoader={showLoader} dataRecvd={dataRecvd} mediaList={mediaList} />}
+                    </Container>
                 </Row>
             </Container>
             <Footer/>
