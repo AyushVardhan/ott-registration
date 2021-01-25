@@ -6,7 +6,7 @@ const Footer = () => {
             <div id="section1" sticky="bottom" className="bg-dark" variant="dark" style={{paddingBottom: "50"}}>
                 <Container style={{color: "white"}}>
                     <Row className="justify-content-center mb-1" style={{paddingTop: "5px"}}>
-                        <p>Reach me out at : <a href="mailto:talkiesroll@gmail.com">talkiesroll@gmail.com</a></p> 
+                        <p>Reach us out at : <a href="mailto:talkiesroll@gmail.com">talkiesroll@gmail.com</a></p> 
                     </Row>
                     <Row style={{paddingBottom: "2px"}}>
                         <Col>

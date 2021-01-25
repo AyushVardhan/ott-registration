@@ -1,6 +1,6 @@
 {
-    "SERVER_URL": "http://localhost:8080",
-    "SERVERL_URL": "https://peaceful-ocean-18252.herokuapp.com",
+    "SERVERL_URL": "http://localhost:8080",
+    "SERVER_URL": "https://peaceful-ocean-18252.herokuapp.com",
     "CUSTOM_SEARCH_DAYS" : 15,
     "languageAvailable" : ["Hindi", "English", "Tamil", "Marathi", "Bengali", "Kannada","Telgu"],
     "platformsAvailable" : ["Zee 5", "Sony Liv", "Netflix", "Amazon Prime", "Hotstar Disney", "Voot", "Alt Balaji", "MX Player", "Theatre"],
