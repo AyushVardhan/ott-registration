@@ -6,11 +6,23 @@ import { useState } from 'react';
 
 const CustomSearch = () => {
 
+    let requiredEndDate = new Date();
+    requiredEndDate.setDate(requiredEndDate.getDate() - configData.CUSTOM_SEARCH_DAYS);
+    requiredEndDate = requiredEndDate.toJSON().slice(0, 10);
+    console.log("Required end date in custom search : " + requiredEndDate);
+
+    let requiredMinDate = new Date();
+    requiredMinDate.setDate(requiredMinDate.getDate() - configData.MAX_SEARCH_DAYS);
+    requiredMinDate = requiredMinDate.toJSON().slice(0, 10);
+    console.log("Required min date in custom search : " + requiredMinDate);
+
     const [selectedPlatform, setSelectedPlatform] = useState("All");
     const [selectedLanguage, setSelectedLanguage] = useState("All");
     const [selectedGenre, setSelectedGenre] = useState("All");
-    const [selectedEndDate, setSelectedEndDate] = useState(getRequiredDate());
+    const [selectedEndDate, setSelectedEndDate] = useState(requiredEndDate);
+    const [hasError, setHasError] = useState([]);
 
+    console.log("hasError : "+ hasError.includes("end-date"));
 
     const handlePlatformSelect = function(selectedItem) {
         console.log("Selected Platform : " + selectedItem[0].value);
@@ -35,6 +47,24 @@ const CustomSearch = () => {
 
     const getResults = (e) => {  
         e.preventDefault();
+
+        var parsedDate = Date.parse(selectedEndDate);
+        if (!(isNaN(selectedEndDate) && !isNaN(parsedDate))) {
+            setHasError(["end-date"]);
+            return false;
+        }
+
+        if (selectedEndDate < requiredMinDate) {
+            setHasError(["end-date"]);
+            return false;
+        }
+
+        if (selectedEndDate === new Date().toJSON().slice(0, 10)){
+            setHasError(["end-date"]);
+            return false;
+        }
+
+        setHasError([]);
         console.log(" Platform : " + selectedPlatform + ", Language : " + selectedLanguage + ", Genre : " + selectedGenre + 
         ", EndDate : " + selectedEndDate);
     };
@@ -44,6 +74,7 @@ const CustomSearch = () => {
             <NavBar/>
             <Container id="as" fluid='md' style={{height: '100vh'}}>
                 <Row className="justify-content-center mt-1 mr-1 ml-1" style={{paddingTop: "70px"}}><h2>Custom Search</h2></Row> 
+                <Row className="justify-content-center" style={{fontSize: '12px'}}><p>Allowed search period is last two months from today.</p></Row>
                 <Row className="justify-content-center mt-5">
                     <Col md={9}>
                         <Row className="justify-content-center">
@@ -77,7 +108,8 @@ const CustomSearch = () => {
                             <Col>
                                 <Form.Group controlId="customSearchEndDate">
                                     <Form.Label>Search upto date </Form.Label>
-                                    <input type="date" value={selectedEndDate} onChange={onChange}></input>
+                                    <input type="date" value={selectedEndDate} min={requiredMinDate} onChange={onChange} placeholder="yyyy-mm-dd"></input>
+                                    <div className={hasError.includes("end-date") ? "text-danger" : "invisible"}>Incorrect date. Please try again!</div>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -99,13 +131,5 @@ const CustomSearch = () => {
         </>
     );
 };
-
-function getRequiredDate() {
-    let requiredEndDate = new Date();
-    requiredEndDate.setDate(requiredEndDate.getDate() - configData.CUSTOM_SEARCH_DAYS);
-    requiredEndDate = requiredEndDate.toJSON().slice(0, 10);
-    console.log("Required end date in custom search : " + requiredEndDate);
-    return requiredEndDate;
-}
 
 export default CustomSearch;
