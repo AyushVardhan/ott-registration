@@ -35,6 +35,11 @@ const CustomSearch = () => {
     requiredMinDate = requiredMinDate.toJSON().slice(0, 10);
     console.log("Required min date in custom search : " + requiredMinDate);
 
+    let requiredMaxDate = new Date();
+    requiredMaxDate.setDate(requiredMaxDate.getDate() - 1);
+    requiredMaxDate = requiredMaxDate.toJSON().slice(0, 10);
+    console.log("Required max date in custom search : " + requiredMaxDate);
+
     const [selectedPlatform, setSelectedPlatform] = useState("All");
     const [selectedLanguage, setSelectedLanguage] = useState("All");
     const [selectedGenre, setSelectedGenre] = useState("All");
@@ -169,8 +174,8 @@ const CustomSearch = () => {
                             </Col>
                             <Col>
                                 <Form.Group controlId="customSearchEndDate">
-                                    <Form.Label>Search upto date </Form.Label>
-                                    <input type="date" value={selectedEndDate} min={requiredMinDate} onChange={onChange} placeholder="yyyy-mm-dd"></input>
+                                    <Form.Label>Search by </Form.Label>
+                                    <input type="date" value={selectedEndDate} min={requiredMinDate} max={requiredMaxDate} onChange={onChange} placeholder="yyyy-mm-dd"></input>
                                     <div className={hasError.includes("end-date") ? "text-danger" : "invisible"}>Incorrect date. Please try again!</div>
                                 </Form.Group>
                             </Col>

@@ -9,7 +9,7 @@ const NavBar = () => {
                 <Navbar.Toggle className="ml-auto" aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text className="mr-5">
-                        <a href="/custom-search" style={{color: "white"}}>Custom Search</a>
+                        <a href="/custom-search" style={{color: "white"}}>Search</a>
                     </Navbar.Text>
                     <Navbar.Text className="mr-5">
                         <Link to="section1" spy={true} smooth={true} duration={1000} style={{color: "white", cursor: "pointer"}}>Contact Us</Link>
