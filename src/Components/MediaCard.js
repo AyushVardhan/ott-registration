@@ -6,9 +6,13 @@ function MediaCard(props) {
         <Card className='mb-2'>
             <Card.Body>
                 <Container>
-                    <Card.Title>{props.mediaDetail.mediaName}</Card.Title>
+                    <Row>
+                        <Col><Card.Title>{props.mediaDetail.mediaName}</Card.Title></Col>
+                        <Col><b><i>IMDb rating </i> : </b>{props.mediaDetail.imdb}</Col>
+                    </Row>
                     <Card.Subtitle className="mb-2 text-muted">{props.mediaDetail.synopsis}</Card.Subtitle>
                     <br/>
+
                     <Row className='mb-1'>
                         <Col><b><i>Genre</i> : </b>{props.mediaDetail.genres}</Col>
                         <Col><b><i>Language</i> : </b>{props.mediaDetail.language}</Col>

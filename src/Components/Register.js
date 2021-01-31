@@ -9,7 +9,7 @@ import configData from "./config.json";
 
 function Register(props) {
 
-    const [mediaDetails, setMediaDetails] = useState({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' }); 
+    const [mediaDetails, setMediaDetails] = useState({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', IMDb: '', Genres: '' }); 
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [selectedPlatform, setSelectedPlatform] = useState([]);
 
@@ -33,7 +33,7 @@ function Register(props) {
         e.preventDefault();
         console.log(" Name : " + mediaDetails.Name + " Director : " + mediaDetails.Director + " ReleaseDate : " + mediaDetails.ReleaseDate + 
         " Synopsis : " + mediaDetails.Synopsis + " Language : " + selectedLanguages + " Platform : " + selectedPlatform + 
-        " Cast : " + mediaDetails.Cast + " Genres : " + mediaDetails.Genres);
+        " Cast : " + mediaDetails.Cast + " IMDb rating : " + mediaDetails.IMDb + " Genres : " + mediaDetails.Genres);
 
         const url = configData.SERVER_URL+`/registerMedia`;
         console.log("Making call to : " + url);
@@ -51,13 +51,15 @@ function Register(props) {
                  language: selectedLanguages,
                  platform: selectedPlatform,
                  cast: mediaDetails.Cast,
+                 imdb: mediaDetails.IMDb,
                  genres: mediaDetails.Genres
                 }),
         })
         .then(res => {
             if (res.ok) {
+                alert("Registration done successfully!")
                 console.log("Registration done successfully!");
-                setMediaDetails({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', Genres: '' });
+                setMediaDetails({ Name: '', Director: '', ReleaseDate: '', Synopsis: '', Language: '', Platform: '', Cast: '', IMDb: '', Genres: '' });
                 setSelectedLanguages([]);
                 setSelectedPlatform([]);            
             }
@@ -124,7 +126,12 @@ function Register(props) {
 
                     <Form.Group controlId="formCastNames">
                             <Form.Label>Cast </Form.Label>
-                            <Form.Control type="text" name="Cast" placeholder="Enter director name here" value={mediaDetails.Cast} onChange={onChange}/>
+                            <Form.Control type="text" name="Cast" placeholder="Enter casts name here" value={mediaDetails.Cast} onChange={onChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formImdbRating">
+                            <Form.Label>IMDB Rating </Form.Label>
+                            <Form.Control type="text" name="IMDb" placeholder="Enter IMDB rating here" value={mediaDetails.IMDb} onChange={onChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="formMediaGenre">
